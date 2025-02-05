@@ -1,0 +1,45 @@
+Netflix GPT : 
+
+We are building a project very similar to netflix. A App where you can go and see a list of movies 
+
+feature of the proj:
+
+-> How authentication works. we will be using google firebase to have our backend. And then we will connect our react application to the firebase backend 
+
+-> How you can protect the routes from authentication. If the user is logged in then only go to certain page.
+
+We will also cover form. How to handle a signin form , login form 
+
+It is a kind of mix of netflix  +  gpt 
+
+We are going to use chatgpt APIs to search for movie.
+
+Where we will give input box and user can write anything. I dont know what movie to watch, if i want to watch a funny indian movie so recommend me some 
+
+netflix gpt will use its gpt power and will search for your new amazing cool movie and we will give him suggestions
+
+If i want to watch some funmy movie like 3 ediots. so it will give you suggestions 
+
+i installed npm create vite@latest 
+
+Features :
+
+ -> Browser 
+    - Header 
+    - Main Movie 
+        - Trailer in background
+        - Title and description
+        - Movie suggestions
+          - MOvie lists * N
+
+Browser page comes when you are logged in (after authentication)
+
+if you are not authenticated Login/Sign up page  
+
+Once you sign in
+redirect to browse page 
+
+
+Netflix GPT 
+   - Search bar 
+   - Movie suggestions 
