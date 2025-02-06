@@ -24,22 +24,170 @@ i installed npm create vite@latest
 
 Features :
 
+   -> Login/Sign Up page/ 
+      -Sign In / Sign up form 
+      - once you are logged in redirect to browse page 
+
  -> Browser 
     - Header 
     - Main Movie 
         - Trailer in background
-        - Title and description
+        - Title and description and play     button 
         - Movie suggestions
           - MOvie lists * N
 
+  => Netflix GPT 
+      - Search bar 
+      - Movie suggestions 
+
+
 Browser page comes when you are logged in (after authentication)
 
-if you are not authenticated Login/Sign up page  
+if you are not authenticated then there is a home page where u have the option of sign in 
+Login/Sign up page  
 
-Once you sign in
+Once you sign in then it will go to browse page 
+
+if you are directly going to browser page then it will take you to the browser page 
 redirect to browse page 
 
 
-Netflix GPT 
-   - Search bar 
-   - Movie suggestions 
+===================================
+
+
+text-3xl will increase the font of the project 
+
+
+First we have made Login Comp, then header , then body, then browse and exported my Body comp in App.js 
+
+In Body comp there we are importing Login and browse comp 
+
+Its neccessary to name file with .jsx other wise it will give error 
+
+
+======================
+
+
+Now we will do routing in out project install npm install react-router-dom
+
+ and changes we will do in body 
+
+ import Browser from "./Browse";
+import Login from "./Login";
+
+import { createBrowserRouter,RouterProvider } from "react-router-dom";
+
+const Body = () => {
+  const appRouter = createBrowserRouter([
+    {
+      path: "/",
+      element: <Body></Body>,
+    },
+
+    {
+      path: "/browse",
+      element: <Browse />,
+    },
+  ]);
+
+  return (
+    <div>
+      <RouterProvider router={appRouter}/>
+    </div>
+  );
+};
+
+export default Body;
+
+and we can only router to browse page only when we are authenticated 
+
+
+====================
+
+Now we will build our login screen , so first of all we will build our header 
+
+
+header will be having a netflix logo 
+
+const Header = () => {
+  return (
+    <div className="absolute px-6 py-2 bg-gradient-to-b from-black">
+      <img
+        src="
+https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production/consent/87b6a5c0-0104-4e96-a291-092c11350111/01938dc4-59b3-7bbc-b635-c4131030e85f/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+        alt="logo"
+        className="w-46 "
+      ></img>
+    </div>
+  );
+};
+
+export default Header;
+
+
+Now we will build our login form 
+
+When ever we build a form w always need a validation to it 
+
+when you have to built alot of details then always use a library known as formic 
+
+When fields becomes a lot then managing validation , handling errors in a big form becomes very difficult 
+
+Now right now we will teach how we can write validation inside our form 
+
+This is our login page till now :=>
+
+import { useState } from "react";
+import Header from "./Header";
+
+const Login = () => {
+  const [isSignin, setisSignIn] = useState(true);
+
+  return (
+    <div>
+      <Header></Header>
+      <div className="absolute">
+        <img src="	https://assets.nflxext.com/ffe/siteui/vlv3/fb5cb900-0cb6-4728-beb5-579b9af98fdd/web/IN-en-20250127-TRIFECTA-perspective_cf66f5a3-d894-4185-9106-5f45502fc387_large.jpg" />
+      </div>
+      <form className="absolute w-3/12 m-45 p-12 mx-auto left-0 right-0 text-white bg-black backdrop-opacity-5">
+        <h1 className="font-bold text-left text-3xl my-3 ml-2 text-white">
+          {isSignin ? "Sign in" : "Sign Up"}
+        </h1>
+        {isSignin == false && (
+          <input
+            type="text"
+            placeholder="Name"
+            className="px-4 py-2 m-2  bg-gray-900 text-gray-400 w-full rounded-sm"
+          ></input>
+        )}
+        <input
+          type="text"
+          placeholder="Email address"
+          className="px-4 py-2 m-2  bg-gray-900 text-gray-400 w-full rounded-sm"
+        ></input>
+        <input
+          type="password"
+          placeholder="Password"
+          className="px-4 py-2 m-2 bg-gray-900 text-gray-400 w-full rounded-sm"
+        ></input>
+        <button className="px-4 py-2 m-2 bg-red-700 w-full rounded-sm cursor-pointer">
+          {isSignin ? "Sign in" : "Sign Up"}
+        </button>
+        <p
+          className="py-3 cursor-pointer"
+          onClick={() => {
+            setisSignIn(!isSignin);
+          }}
+        >
+          {isSignin ? "Not a User? Sign Up now" : "Already a User ? Sign in"}
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
+
+// in login page we have a header and then we have a sign in page
+
+
