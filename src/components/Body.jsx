@@ -3,7 +3,15 @@ import Login from "./Login";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { onAuthStateChanged } from "firebase/auth";
+
+import { auth } from "../utils/firebase";
+
+import { useDispatch } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
 const Body = () => {
+  const dispatch = useDispatch();
+
   const appRouter = createBrowserRouter([
     {
       path: "/",
@@ -15,6 +23,26 @@ const Body = () => {
       element: <Browse />,
     },
   ]);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log(user);
+      const { displayName, email, uid, photoURL } = user;
+
+      dispatch(
+        addUser({
+          displayName: displayName,
+          email: email,
+          uid: uid,
+          photoURL: photoURL,
+        })
+      );
+      // ...
+    } else {
+      // User is signed out
+      dispatch(removeUser());
+    }
+  });
 
   return (
     <div>

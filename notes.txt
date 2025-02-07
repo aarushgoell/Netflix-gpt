@@ -191,3 +191,99 @@ export default Login;
 // in login page we have a header and then we have a sign in page
 
 
+We will learn useRef hook also 
+
+Either we can create stack variables or we can use reference of that input box 
+
+useref will create a ref and that email will be a reference to the input box 
+
+when we are submitting the form it is refreshing the whole page i want to stop it from submitting it 
+
+We can add name validation as well 
+
+const handleButtonClick = () => {
+    // validate the form data
+
+    console.log(email.current.value);
+    console.log(password.current.value);
+
+    const message = checkValidData(email.current.value, password.current.value);
+
+    setErrorMessage(message);
+  };
+
+  Go to utils/validate.js that is validation code
+
+  Now we will do authentication
+
+  We will be using firebase for authenticating 
+  
+  We have till now deplyed our app 
+
+  the commands used is we also habe to install firebase inour app and also itde dev tools 
+
+npm install -g firebase-toolsy
+
+firebase login 
+firebase init ,select hosting
+firebase deploy 
+The deployed link will work fine in ingonito 
+
+
+Now we will create a new user and sign in a user 
+
+
+  const handleButtonClick = () => {
+    // validate the form data
+
+    console.log(email.current.value);
+    console.log(password.current.value);
+
+    const message = checkValidData(email.current.value, password.current.value);
+    setErrorMessage(message);
+
+    if (message) {
+      return;
+    }
+
+    // Sign In/ Sign up logic here
+    // create a new user
+
+    if (!isSignin) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    }
+  };
+
+
+  We will store the information of user in redux toolkit 
+  

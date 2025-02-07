@@ -1,8 +1,113 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Header from "./Header";
 
+import { useNavigate } from "react-router-dom";
+
+import { checkValidData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+
+import { auth } from "../utils/firebase";
+import { useDispatch } from "react-redux";
+
+import { addUser } from "../utils/userSlice";
+
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [isSignin, setisSignIn] = useState(true);
+
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleButtonClick = () => {
+    // validate the form data
+
+    console.log(email.current.value);
+    console.log(password.current.value);
+
+    const message = checkValidData(email.current.value, password.current.value);
+    setErrorMessage(message);
+
+    if (message) {
+      return;
+    }
+
+    // Sign In/ Sign up logic here
+    // create a new user
+
+    if (!isSignin) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          // console.log(user);
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:
+              "	https://lh3.googleusercontent.com/ogw/AF2bZyhr1ZHQJRPRmc_tsKrGj9l90D5ynMXdHBJhjp99WxjWqA=s64-c-mo",
+          })
+            .then(() => {
+              // Profile updated!
+
+              const {
+                displayName: displayName,
+                email: email,
+                uid: uid,
+                photoURL: photoURL,
+              } = auth.currentUser;
+              dispatch(
+                addUser({
+                  displayName: displayName,
+                  email: email,
+                  uid: uid,
+                  photoURL: photoURL,
+                })
+              );
+
+              navigate("/browse");
+              // ...
+            })
+            .catch((error) => {
+              setErrorMessage(error);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          // console.log(user);
+
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    }
+  };
 
   return (
     <div>
@@ -10,12 +115,18 @@ const Login = () => {
       <div className="absolute">
         <img src="	https://assets.nflxext.com/ffe/siteui/vlv3/fb5cb900-0cb6-4728-beb5-579b9af98fdd/web/IN-en-20250127-TRIFECTA-perspective_cf66f5a3-d894-4185-9106-5f45502fc387_large.jpg" />
       </div>
-      <form className="absolute w-3/12 m-45 p-12 mx-auto left-0 right-0 text-white bg-black backdrop-opacity-5">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="absolute w-3/12 m-45 p-12 mx-auto left-0 right-0 text-white bg-black backdrop-opacity-5"
+      >
         <h1 className="font-bold text-left text-3xl my-3 ml-2 text-white">
           {isSignin ? "Sign in" : "Sign Up"}
         </h1>
         {isSignin == false && (
           <input
+            ref={name}
             type="text"
             placeholder="Name"
             className="px-4 py-2 m-2  bg-gray-900 text-gray-400 w-full rounded-sm"
@@ -23,15 +134,21 @@ const Login = () => {
         )}
         <input
           type="text"
+          ref={email}
           placeholder="Email address"
           className="px-4 py-2 m-2  bg-gray-900 text-gray-400 w-full rounded-sm"
         ></input>
         <input
           type="password"
+          ref={password}
           placeholder="Password"
           className="px-4 py-2 m-2 bg-gray-900 text-gray-400 w-full rounded-sm"
         ></input>
-        <button className="px-4 py-2 m-2 bg-red-700 w-full rounded-sm cursor-pointer">
+        <p className="text-red-500 text-md p-3">{errorMessage}</p>
+        <button
+          className="px-4 py-2 m-2 bg-red-700 w-full rounded-sm cursor-pointer"
+          onClick={handleButtonClick}
+        >
           {isSignin ? "Sign in" : "Sign Up"}
         </button>
         <p
