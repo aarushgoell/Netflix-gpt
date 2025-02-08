@@ -1,8 +1,6 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
 
-import { useNavigate } from "react-router-dom";
-
 import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
@@ -14,9 +12,9 @@ import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 
 import { addUser } from "../utils/userSlice";
+import { backGROUND, photoURL } from "../utils/constants";
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [isSignin, setisSignIn] = useState(true);
@@ -55,8 +53,7 @@ const Login = () => {
           // console.log(user);
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "	https://lh3.googleusercontent.com/ogw/AF2bZyhr1ZHQJRPRmc_tsKrGj9l90D5ynMXdHBJhjp99WxjWqA=s64-c-mo",
+            photoURL: photoURL,
           })
             .then(() => {
               // Profile updated!
@@ -76,7 +73,6 @@ const Login = () => {
                 })
               );
 
-              navigate("/browse");
               // ...
             })
             .catch((error) => {
@@ -98,8 +94,6 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           // console.log(user);
-
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -113,7 +107,7 @@ const Login = () => {
     <div>
       <Header></Header>
       <div className="absolute">
-        <img src="	https://assets.nflxext.com/ffe/siteui/vlv3/fb5cb900-0cb6-4728-beb5-579b9af98fdd/web/IN-en-20250127-TRIFECTA-perspective_cf66f5a3-d894-4185-9106-5f45502fc387_large.jpg" />
+        <img src={backGROUND} />
       </div>
       <form
         onSubmit={(e) => {
@@ -126,8 +120,8 @@ const Login = () => {
         </h1>
         {isSignin == false && (
           <input
-            ref={name}
             type="text"
+            ref={name}
             placeholder="Name"
             className="px-4 py-2 m-2  bg-gray-900 text-gray-400 w-full rounded-sm"
           ></input>

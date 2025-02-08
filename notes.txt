@@ -286,4 +286,40 @@ Now we will create a new user and sign in a user
 
 
   We will store the information of user in redux toolkit 
+
+
+Now you will notive that we are able to move to browse route and this is only for authenticated and payed users 
+
+And if i am not signed in , it should redirect me to the login page 
+
+if the user is logged in then it will move to browser page 
+
+Body comp is the parent comp and routing is happending inside the body comp and we cant use navigate outside of the Body component 
+
+I will add the useEffect to a place which is there in my whole app and which is also there in my Router Provider 
+
+One best place to put my useEffect is inside my header component 
+
+
+and when the component will load , everytime useEffect will be called , So when my component will unmount ,i will unsubscribe from the event also 
+
+onAuthStateChanged returns a unsubscribe function and i will call this unsubscribe function it will remove this onAuthStateChanged from our browser 
+
+so i will unsubscribe it when my header component unloads 
+
+  
+  API Read access token : eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNmJiNTJkMDA5OTNlNmNjZTM2ZjczNjQzMGM1OGU2OCIsIm5iZiI6MTczODk5MDU5Mi45MzQsInN1YiI6IjY3YTZlNDAwMTcyOWZmYTFjYWUwNWFhZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hHdmHO2fKbH055j88wJuznHUw3pX_lD-LGGX9IVTkuY
+
+  API key : e6bb52d00993e6cce36f736430c58e68
+
+  React does some extra rendering of your components to check some inconsistency between your calls and this only happens in development mode and it will throw an error if there is inconsistency in your cycle 
+
+  We are creating a movie slice in which we will put all the movies data 
+
+  Creating your own custom Hook 
+
+  We have created a title component
+
+  
+
   
