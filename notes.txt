@@ -320,6 +320,24 @@ so i will unsubscribe it when my header component unloads
 
   We have created a title component
 
-  
+
+  Introduction to GTP 
+
+  Now we will create a seperate page that will be a GPT search page 
+
+  In that you will be having a search bar.
+
+  Some time it happens that i dont know which movie to watch, I just want to type something in the search bar and want that chat gpt , the GPT-API will give me the results what movie to watch.
+
+  Using GPT as the movie recommendation system 
+
+  which netflix has a good recommendation system but why not gpt will recommend movies to us.
+
+  Suppose i want to search for old hindi bollywood movies which are funny so give me suggestions so GPT can use its knowledge and can recommend me some movie out of it 
+
+  we will be using GPT API which is built by open AI.
+
+  We will plug those APIS in frontend API and will use it.
+  We will ask him alot of questions and it will give me some results 
 
   

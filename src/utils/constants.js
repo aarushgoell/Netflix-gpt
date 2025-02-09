@@ -16,6 +16,23 @@ export const API_OPTIONS = {
   },
 };
 
+export const moviesPoster = "https://image.tmdb.org/t/p/w300";
+
+export const SUPPORTED_LANGUAGES = [
+  {
+    identifier: "English",
+    name: "English",
+  },
+  {
+    identifier: "Spanish",
+    name: "Spanish",
+  },
+  {
+    identifier: "Hindi",
+    name: "Hindi",
+  },
+];
+
 // fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
 //   .then(res => res.json())
 //   .then(res => console.log(res))

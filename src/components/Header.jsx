@@ -9,6 +9,10 @@ import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useEffect } from "react";
 import { NETFLIXLOGO } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { SUPPORTED_LANGUAGES } from "../utils/constants";
+
+import { changeLanguage } from "../utils/confligSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,6 +20,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const user = useSelector((store) => store.user);
+  const gptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const signmeOut = () => {
     signOut(auth)
@@ -25,6 +30,14 @@ const Header = () => {
       .catch((error) => {
         navigate("/errorpage");
       });
+  };
+
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
   };
 
   useEffect(() => {
@@ -63,6 +76,26 @@ const Header = () => {
 
       {user && (
         <div className="flex">
+          {gptSearch && (
+            <select
+              className="px-4 py-2 bg-gray-900 text-white mt-5 h-10 rounded-lg"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => {
+                return (
+                  <option key={lang.identifier} value={lang.identifier}>
+                    {lang.name}
+                  </option>
+                );
+              })}
+            </select>
+          )}
+          <button
+            onClick={handleGptSearchClick}
+            className="text-white bg-purple-700 m-4 h-10 px-5 rounded-lg cursor-pointer"
+          >
+            {gptSearch ? "Home" : "GPT Search"}
+          </button>
           <img src={user?.photoURL} className=" mt-4 h-10" />;
           <button
             onClick={signmeOut}

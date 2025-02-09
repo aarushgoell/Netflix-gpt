@@ -40,3 +40,12 @@ Currently, two official plugins are available:
 - fetch data for trailer
 - Embedded the youtube video and make it autoplay and mute
 - Tailwind classes to make Main container look awesome
+- Build a secondary Component
+- Build Movie List
+- Build Movie Card
+- TMDB Image CDN URL
+- Made the Browse page amazing with Tailwind CSS
+- usePopularMovie Custom Hook
+- GPT Search Page
+- GPT Search Bar
+- MultiLanguage Feature in our App
